@@ -37,7 +37,7 @@ public class DatabaseTest {
 			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/AllianceApp/Database/petitionlist.accdb");
 			
 			if(conn.isValid(1)) {
-				System.out.println("Database connection: "+conn.isValid(1));
+				System.out.println("Database connection: "+conn.isValid(1)+"\n");
 				conn.close();
 			}
 		} catch (SQLException e) {
