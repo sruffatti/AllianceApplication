@@ -36,7 +36,7 @@ public class Record extends Observable{
 	public Record(int id, String address) {
 		this.id = id;
 		this.address = address;
-		this.apiKey = "AIzaSyDBMTCxp7f3iz-tM4kDH2mFpOMlDwDsGG0";
+		this.apiKey = "";
 		this.lat = "";
 		this.lng = "";
 	}
