@@ -182,11 +182,15 @@ public class Record extends Observable{
 		String[] fields = address.split(" ");
 		String formattedAddress = "";
 		
-		formattedAddress = formatAddress(fields, formattedAddress);
+		formattedAddress = formatAddress(fields);
 		queryGoogle(formattedAddress);
-		queryWard(lat, lng);
-		queryPoliceDistrict(lat, lng);
-		queryPoliceBeat(lat, lng);
+			if(lat != "") {
+				queryWard(lat, lng);
+				if(ward != null) {
+					queryPoliceDistrict(lat, lng);
+					queryPoliceBeat(lat, lng);
+				}
+			}
 	}
 
 	/**
@@ -194,7 +198,8 @@ public class Record extends Observable{
 	 * @param formattedAddress
 	 * @return
 	 */
-	private String formatAddress(String[] fields, String formattedAddress) {
+	private String formatAddress(String[] fields) {
+		String formattedAddress = "";
 		for(int i = 0; i < fields.length; i++) {
 			if(i != fields.length -1) {
 				formattedAddress += fields[i]+ "+";
@@ -220,6 +225,7 @@ public class Record extends Observable{
 				JsonObject x1 = result.getJsonObject("metadata");
 				setPoliceBeat(x1.getJsonString("BEAT_NUM").getString());
 			}
+			
 		} 
 		catch (MalformedURLException e) {
 			e.printStackTrace();
