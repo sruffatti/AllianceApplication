@@ -32,17 +32,15 @@ public class DatabaseTest {
 	/**
 	 * Method to check if connection to database can be established.
 	 */
-	public void establishConnection() {
+	public void establishConnection(String dbPrefix, String dbSuffix) {
 		try {
-			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/AllianceApp/Database/petitionlist.accdb");
+			conn = DriverManager.getConnection(dbPrefix + dbSuffix);
 			
 			if(conn.isValid(1)) {
 				System.out.println("Database connection: "+conn.isValid(1)+"\n");
 				conn.close();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			System.out.println("Make sure the database is in the right folder...\nC://AllianceApp/Database");
 		}
 	}

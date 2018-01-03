@@ -14,34 +14,54 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
+		//Instantiate Text object containing all constants. 
+			Text text = new Text();
+		
 		//Directory Builder.
-		System.out.println("Starting up Alliance Application.\n\nChecking directory.");
 		DirectoryBuilder builder = new DirectoryBuilder();
 			builder.buildDirectory();
 
 		//Check for database connection
-		System.out.println("\nEstablishing connection to database.");
-		DatabaseTest x = new DatabaseTest();
-			x.establishConnection();
+		DatabaseTest tester = new DatabaseTest();
+			tester.establishConnection(text.getDbPrefix(), text.getDbSuffix());
 			
-		//
+		//Sequence of steps for establishing connection to db, execute a query, and loop through results
 		try {
-			int count = 0;
-			Connection conn = DriverManager.getConnection("jdbc:ucanaccess://C:/AllianceApp/Database/petitionlist.accdb");
+			
+			//Connect to database
+			Connection conn = DriverManager.getConnection(text.dbStringBuilder());
+			
+			//Instantiate statement, create statement
 			Statement statement = conn.createStatement();
-			ResultSet results = statement.executeQuery("SELECT PetitionList.ID, PetitionList.Address, PetitionList.City, PetitionList.State "
-					+ "FROM PetitionList "
-					+ "WHERE PetitionList.Address is not null LIMIT 100");
-			while(results.next()) {
-				String formatted = String.format("%s %s %s", results.getString("Address"), results.getString("City"), results.getString("State"));
-				Record a = new Record(results.getInt("ID") ,formatted);
-				a.gatherInformation();
-				System.out.println(a);
-				count++;
-			}
-			System.out.println(count);
+			
+			//Execute query - query is from Text class
+			ResultSet results = statement.executeQuery(text.getDbQuery());
+			
+				//Loop through results, instantiate record, and make API requests
+				while(results.next()) {
+					//Format address
+					String formatted = formatAddress(results);
+					//Instantiate record using query results and formatted address
+					Record currRecord = new Record(results.getInt("ID") ,formatted);
+					//Make API requests using current Record object
+					currRecord.gatherInformation();
+					//Print the current record to the console.
+					System.out.println(currRecord);
+				}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("Error in querying database. SQL Exception");
 		}		
+	}
+
+	/**
+	 * Method is used to format multiple elements into a single string. 
+	 * @param results
+	 * @return
+	 * @throws SQLException
+	 */
+	private static String formatAddress(ResultSet results) throws SQLException {
+		String formatted = String.format("%s %s %s", results.getString("Address"), results.getString("City"), results.getString("State"));
+		return formatted;
 	}
 }

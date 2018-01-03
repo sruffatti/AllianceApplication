@@ -8,7 +8,6 @@
  */
 import java.io.File;
 public class DirectoryBuilder {
-	private File failLog;
 	private File successLog;
 	private File database;
 	
@@ -17,8 +16,7 @@ public class DirectoryBuilder {
 	 */
 	public DirectoryBuilder() {
 		setDatabase(new File("C:\\AllianceApp/Database"));
-		setSuccessLog(new File("C:\\AllianceApp/Logs/Success"));
-		setFailLog(new File("C:\\AllianceApp/Logs/Fail"));
+		setSuccessLog(new File("C:\\AllianceApp/Logs"));
 	}
 
 	/**
@@ -48,20 +46,6 @@ public class DirectoryBuilder {
 	public void setSuccessLog(File successLog) {
 		this.successLog = successLog;
 	}
-
-	/**
-	 * @return failLog
-	 */
-	public File getFailLog() {
-		return failLog;
-	}
-	
-	/**
-	 * @param File failLog
-	 */
-	public void setFailLog(File failLog) {
-		this.failLog = failLog;
-	}
 	
 	/**
 	 * Builds directories
@@ -70,8 +54,7 @@ public class DirectoryBuilder {
 		if(!checkDirectory()) {
 			database.mkdirs();
 			successLog.mkdirs();
-			failLog.mkdirs();
-			if(database.exists() && successLog.exists() && failLog.exists()) {
+			if(database.exists() && successLog.exists()) {
 				System.out.println("Built directory");
 			}
 			else {
@@ -88,7 +71,7 @@ public class DirectoryBuilder {
 	 * @return returns boolean value
 	 */
 	public boolean checkDirectory() {
-		if(successLog.exists() && database.exists() && failLog.exists()) {
+		if(successLog.exists() && database.exists()) {
 			return true;
 		}
 		return false;
