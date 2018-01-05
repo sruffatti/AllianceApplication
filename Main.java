@@ -18,7 +18,7 @@ public class Main {
 			Text text = new Text();
 		
 		//Directory Builder.
-		DirectoryBuilder builder = new DirectoryBuilder();
+		DirectoryBuilder builder = new DirectoryBuilder(text.getDbDirectory(), text.getDbLog());
 			builder.buildDirectory();
 
 		//Check for database connection
@@ -27,7 +27,6 @@ public class Main {
 			
 		//Sequence of steps for establishing connection to db, execute a query, and loop through results
 		try {
-			
 			//Connect to database
 			Connection conn = DriverManager.getConnection(text.dbStringBuilder());
 			
@@ -39,17 +38,21 @@ public class Main {
 			
 				//Loop through results, instantiate record, and make API requests
 				while(results.next()) {
+					
 					//Format address
 					String formatted = formatAddress(results);
+					
 					//Instantiate record using query results and formatted address
 					Record currRecord = new Record(results.getInt("ID") ,formatted);
+					
 					//Make API requests using current Record object
 					currRecord.gatherInformation();
+					
 					//Print the current record to the console.
 					System.out.println(currRecord);
 				}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Error in querying database. SQL Exception");
 		}		
 	}

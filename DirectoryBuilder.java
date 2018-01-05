@@ -14,9 +14,9 @@ public class DirectoryBuilder {
 	/**
 	 * DirectoryBuilder constructor 
 	 */
-	public DirectoryBuilder() {
-		setDatabase(new File("C:\\AllianceApp/Database"));
-		setSuccessLog(new File("C:\\AllianceApp/Logs"));
+	public DirectoryBuilder(String dbDirectory, String dbLog) {
+		setDatabase(new File(dbDirectory));
+		setSuccessLog(new File(dbLog));
 	}
 
 	/**

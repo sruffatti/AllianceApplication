@@ -228,11 +228,11 @@ public class Record extends Observable{
 			
 		} 
 		catch (MalformedURLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Error in retrieving police beat information. Malformed URL Exception");
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Error in retrieving police beat information. IO Exception");
 		}
 	}
@@ -277,7 +277,7 @@ public class Record extends Observable{
 				setWard(x1.getJsonString("WARD").getString());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.print("Error in retrieving ward information. IO Exception.");
 		}
 	}
@@ -299,11 +299,11 @@ public class Record extends Observable{
 				}
 			} 
 			catch (MalformedURLException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				System.out.println("Error in retrieving latitude and longitude. Malformed URL Exception.");
 			}
 			catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				System.out.println("Error in retrieving latitude and longitude. IO Exception.");
 			}
 		}
